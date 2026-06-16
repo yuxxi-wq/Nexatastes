@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NexaTaste — World Flavours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1a1410;--ink2:#5a4a3a;--ink3:#8a7a6a;
+  --cream:#fdf9f4;--warm:#f7efe3;--pale:#fff8f0;
+  --gold:#c8943a;--gold2:#e8b96a;--gold3:#f5d4a0;
+  --ruby:#c0392b;--sage:#4a7c59;--sky:#2d6a8a;
+  --border:#ede4d8;--card:#ffffff;
+  --sh:0 4px 24px rgba(26,20,16,.07);
+  --sh2:0 12px 48px rgba(26,20,16,.13);
+  --sh3:0 24px 80px rgba(26,20,16,.18);
+  --r:14px;--rl:22px;--rx:32px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);overflow-x:hidden}
+img{display:block;max-width:100%}
+button{cursor:pointer;font-family:inherit;border:none;background:none}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--warm)}
+::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:3px}
+
+/* NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 44px;height:64px;
+  background:rgba(253,249,244,.94);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);transition:box-shadow .3s;
+}
+.nav.scrolled{box-shadow:var(--sh2)}
+.logo{font-family:'Playfair Display',serif;font-size:1.45rem;font-weight:700;letter-spacing:-.02em}
+.logo span{color:var(--gold);font-style:italic}
+.nav-links{display:flex;gap:2px}
+.nav-links a{
+  padding:6px 13px;border-radius:50px;font-size:.82rem;font-weight:500;
+  color:var(--ink2);transition:all .2s;white-space:nowrap;
+}
+.nav-links a:hover{background:var(--warm);color:var(--ink)}
+.nav-links a.active{background:var(--gold);color:#fff}
+.nav-r{display:flex;align-items:center;gap:8px}
+.btn-ghost{
+  padding:7px 16px;border-radius:50px;border:1.5px solid var(--border);
+  font-size:.82rem;font-weight:500;color:var(--ink);transition:all .2s;
+}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-gold{
+  padding:8px 20px;border-radius:50px;background:var(--gold);
+  font-size:.82rem;font-weight:700;color:#fff;transition:all .2s;
+}
+.btn-gold:hover{background:#a87830;transform:translateY(-1px)}
+.cart-pill{
+  position:relative;display:flex;align-items:center;gap:6px;
+  padding:7px 14px;border-radius:50px;border:1.5px solid var(--border);
+  font-size:.82rem;font-weight:600;transition:all .2s;
+}
+.cart-pill:hover{border-color:var(--gold)}
+.cart-ct{
+  background:var(--ruby);color:#fff;border-radius:50%;
+  width:17px;height:17px;font-size:.6rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;transform:scale(0);transition:.25s;
+}
+.cart-ct.on{opacity:1;transform:scale(1)}
+
+/* HERO */
+.hero{
+  margin-top:64px;min-height:94vh;position:relative;
+  display:flex;align-items:center;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;background:#1a0e08}
+.hero-mosaic{
+  position:absolute;inset:0;
+  display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(3,1fr);
+  gap:3px;opacity:.36;
+}
+.hero-mosaic div{overflow:hidden}
+.hero-mosaic div img{width:100%;height:100%;object-fit:cover}
+.hero-grad{
+  position:absolute;inset:0;z-index:1;
+  background:linear-gradient(90deg,rgba(20,10,4,.92) 0%,rgba(20,10,4,.65) 55%,rgba(20,10,4,.18) 100%);
+}
+.hero-content{
+  position:relative;z-index:2;padding:70px 72px;
+  max-width:700px;display:flex;flex-direction:column;gap:26px;
+}
+.eye{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);
+}
+.eye::before{content:'';width:28px;height:2px;background:var(--gold2)}
+.hero-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,5vw,4.8rem);line-height:1.07;letter-spacing:-.03em;color:#fff;
+}
+.hero-h1 em{color:var(--gold2);font-style:italic}
+.hero-p{font-size:1rem;color:rgba(255,255,255,.7);line-height:1.78;max-width:500px}
+.hsearch{
+  display:flex;max-width:520px;
+  background:rgba(255,255,255,.1);backdrop-filter:blur(14px);
+  border:1.5px solid rgba(255,255,255,.2);border-radius:50px;overflow:hidden;
+}
+.hsearch:focus-within{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(200,148,58,.22)}
+.hsearch input{
+  flex:1;padding:15px 22px;background:transparent;border:none;outline:none;
+  font-family:inherit;font-size:.92rem;color:#fff;
+}
+.hsearch input::placeholder{color:rgba(255,255,255,.45)}
+.hsearch button{
+  margin:5px;padding:9px 22px;border-radius:50px;
+  background:var(--gold);color:#fff;font-weight:700;font-size:.88rem;transition:.2s;
+}
+.hsearch button:hover{background:var(--gold2)}
+.hero-cats{display:flex;gap:8px;flex-wrap:wrap}
+.hcat{
+  padding:7px 16px;border-radius:50px;
+  border:1.5px solid rgba(255,255,255,.2);
+  font-size:.8rem;font-weight:600;color:rgba(255,255,255,.78);
+  cursor:pointer;transition:all .2s;
+}
+.hcat:hover,.hcat.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.hstats{display:flex;gap:36px;padding-top:8px}
+.hst strong{
+  font-family:'Playfair Display',serif;font-size:2rem;
+  font-weight:700;color:#fff;display:block;line-height:1;
+}
+.hst span{font-size:.75rem;color:rgba(255,255,255,.48);font-weight:500;margin-top:4px;display:block}
+
+/* SECTIONS */
+.sec{padding:84px 72px}
+.sec-alt{background:var(--warm)}
+.sec-dark{background:var(--ink);color:#fff}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:46px;gap:16px}
+.sec-sub{font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:9px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.18}
+.sec-dark .sec-title{color:#fff}
+.see-all{
+  font-size:.82rem;font-weight:700;color:var(--gold);
+  padding:8px 18px;border-radius:50px;border:1.5px solid var(--gold);
+  transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:5px;
+}
+.see-all:hover{background:var(--gold);color:#fff}
+
+/* FOOD CARDS */
+.food-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px}
+.fc{
+  background:var(--card);border-radius:var(--rl);overflow:hidden;
+  box-shadow:var(--sh);cursor:pointer;transition:transform .3s,box-shadow .3s;
+}
+.fc:hover{transform:translateY(-7px);box-shadow:var(--sh3)}
+.fc-img{height:218px;overflow:hidden;position:relative}
+.fc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.fc:hover .fc-img img{transform:scale(1.07)}
+.fbadge{
+  position:absolute;top:13px;left:13px;
+  padding:4px 11px;border-radius:50px;
+  font-size:.68rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff;
+}
+.bm{background:linear-gradient(135deg,#c8943a,#e8b96a)}
+.bs{background:linear-gradient(135deg,#c0392b,#e74c3c)}
+.bi{background:linear-gradient(135deg,#2d6a8a,#5ba3cc)}
+.bd{background:linear-gradient(135deg,#4a7c59,#6aaa7e)}
+.bn{background:linear-gradient(135deg,#6b4fa0,#9b7fd4)}
+.br{background:linear-gradient(135deg,#8a4a2a,#c0773a)}
+.ffav{
+  position:absolute;top:11px;right:11px;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;transition:transform .2s;
+}
+.ffav:hover{transform:scale(1.18)}
+.fflag{
+  position:absolute;bottom:11px;left:11px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+  border-radius:50px;padding:4px 9px;
+  font-size:.75rem;font-weight:600;
+  display:flex;align-items:center;gap:4px;
+}
+.fc-body{padding:18px 20px 20px}
+.fc-body h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:5px;line-height:1.3}
+.fc-meta{
+  display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+  font-size:.78rem;color:var(--ink2);margin-bottom:10px;
+}
+.fc-meta .d{opacity:.3}
+.srow{display:flex;align-items:center;gap:3px;font-size:.78rem;font-weight:700}
+.srow .s{color:var(--gold)}
+.fc-desc{font-size:.83rem;color:var(--ink2);line-height:1.65;margin-bottom:13px}
+.fc-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:13px;border-top:1px solid var(--border);
+}
+.diffi{display:flex;align-items:center;gap:5px;font-size:.76rem;font-weight:600}
+.dd{width:7px;height:7px;border-radius:50%}
+.de{background:#4a7c59}.dm{background:#c8943a}.dh{background:#c0392b}
+.rbtn{
+  padding:7px 16px;border-radius:50px;background:var(--ink);color:#fff;
+  font-size:.79rem;font-weight:700;transition:all .2s;
+}
+.rbtn:hover{background:var(--gold)}
+
+/* NATIONAL GRID */
+.nat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:22px}
+.nc{
+  background:var(--card);border-radius:var(--rl);overflow:hidden;
+  box-shadow:var(--sh);cursor:pointer;transition:transform .3s,box-shadow .3s;
+}
+.nc:hover{transform:translateY(-5px);box-shadow:var(--sh2)}
+.nc-img{height:190px;overflow:hidden;position:relative}
+.nc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.nc:hover .nc-img img{transform:scale(1.07)}
+.nflag{
+  position:absolute;top:10px;left:10px;
+  font-size:2rem;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));
+}
+.nlabel{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(0,rgba(26,20,16,.82),transparent);
+  padding:26px 14px 12px;
+  color:#fff;font-size:.85rem;font-weight:700;
+}
+.nc-body{padding:14px 16px 18px}
+.nc-body h4{font-family:'Playfair Display',serif;font-size:1.02rem;margin-bottom:4px}
+.nc-body p{font-size:.79rem;color:var(--ink2);line-height:1.6}
+.nc-foot{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:11px;padding-top:11px;border-top:1px solid var(--border);
+}
+.ntime{font-size:.74rem;font-weight:600;color:var(--ink2)}
+.nrbtn{
+  padding:5px 12px;border-radius:50px;background:var(--warm);
+  border:1.5px solid var(--border);font-size:.74rem;font-weight:700;
+  color:var(--ink);transition:all .2s;
+}
+.nrbtn:hover{background:var(--gold);border-color:var(--gold);color:#fff}
+
+/* RESTAURANT STRIP */
+.rest-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:28px}
+.rc{
+  background:var(--card);border-radius:var(--rl);overflow:hidden;
+  box-shadow:var(--sh);transition:transform .3s,box-shadow .3s;cursor:pointer;
+}
+.rc:hover{transform:translateY(-6px);box-shadow:var(--sh3)}
+.rc-img{height:230px;overflow:hidden;position:relative}
+.rc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.rc:hover .rc-img img{transform:scale(1.06)}
+.rstar{
+  position:absolute;top:13px;left:13px;
+  background:rgba(26,20,16,.72);backdrop-filter:blur(8px);
+  color:var(--gold2);font-size:.76rem;font-weight:700;
+  padding:4px 11px;border-radius:50px;
+  display:flex;align-items:center;gap:4px;
+}
+.rc-body{padding:20px 22px 22px}
+.rc-body h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:7px}
+.rc-body p{font-size:.83rem;color:var(--ink2);line-height:1.6;margin-bottom:14px}
+.rtags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:16px}
+.rtag{
+  padding:3px 10px;border-radius:50px;
+  background:var(--warm);border:1px solid var(--border);
+  font-size:.72rem;font-weight:600;color:var(--ink2);
+}
+.rc-row{display:flex;align-items:center;justify-content:space-between}
+.rprice{font-weight:700;font-size:.9rem}
+.rprice small{color:var(--ink2);font-weight:400;font-size:.76rem}
+.bookbtn{
+  padding:8px 18px;border-radius:50px;background:var(--gold);color:#fff;
+  font-size:.81rem;font-weight:700;transition:all .2s;
+}
+.bookbtn:hover{background:#a87830}
+
+/* BANNER */
+.banner{
+  background:linear-gradient(135deg,#1a1410 0%,#2d1a0a 100%);
+  padding:56px 72px;
+  display:grid;grid-template-columns:1.3fr 1fr;gap:44px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.banner::after{
+  content:'';position:absolute;right:-60px;top:-60px;
+  width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle,rgba(200,148,58,.22),transparent 70%);
+  pointer-events:none;
+}
+.banner-txt{color:#fff}
+.beye{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold2);margin-bottom:11px}
+.btitle{font-family:'Playfair Display',serif;font-size:2.2rem;line-height:1.2;margin-bottom:14px}
+.btitle em{color:var(--gold2);font-style:italic}
+.bpara{font-size:.93rem;line-height:1.78;opacity:.7;margin-bottom:22px}
+.bimgs{
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;
+  gap:8px;height:260px;border-radius:var(--rl);overflow:hidden;
+}
+.bimgs div{overflow:hidden}
+.bimgs div img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.bimgs div:hover img{transform:scale(1.06)}
+.bimgs div:first-child{grid-row:span 2}
+
+/* MODAL */
+.overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(20,10,4,.65);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;padding:18px;
+}
+.overlay.on{opacity:1;pointer-events:all}
+.modal{
+  background:#fff;border-radius:var(--rx);
+  width:100%;max-width:900px;max-height:91vh;overflow-y:auto;
+  transform:translateY(26px) scale(.96);
+  transition:transform .38s cubic-bezier(.175,.885,.32,1.275);
+  box-shadow:var(--sh3);
+}
+.overlay.on .modal{transform:none}
+.mhero{height:290px;position:relative;overflow:hidden;flex-shrink:0}
+.mhero img{width:100%;height:100%;object-fit:cover}
+.mhero-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(0deg,rgba(20,10,4,.82) 0%,rgba(20,10,4,.1) 60%);
+}
+.mhero-txt{position:absolute;bottom:24px;left:28px;right:68px;color:#fff}
+.mhero-txt h2{font-family:'Playfair Display',serif;font-size:1.9rem;margin-bottom:5px}
+.mhero-meta{font-size:.86rem;opacity:.85;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.mclosebtn{
+  position:absolute;top:14px;right:14px;z-index:10;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.92);
+  font-size:1rem;display:flex;align-items:center;justify-content:center;
+  transition:.2s;
+}
+.mclosebtn:hover{background:#fff}
+.mbody{padding:28px}
+.mtabs{
+  display:flex;gap:3px;padding:4px;
+  background:var(--warm);border-radius:11px;
+  margin-bottom:26px;width:fit-content;
+}
+.mtab{
+  padding:8px 20px;border-radius:9px;font-size:.86rem;font-weight:600;
+  color:var(--ink2);cursor:pointer;transition:all .2s;
+}
+.mtab.active{background:#fff;color:var(--ink);box-shadow:var(--sh)}
+.r2col{display:grid;grid-template-columns:1fr 1.3fr;gap:32px}
+.ingr-list{display:flex;flex-direction:column;gap:9px}
+.ingr-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:9px 13px;background:var(--warm);border-radius:9px;
+  border:1px solid var(--border);font-size:.85rem;gap:8px;
+}
+.iamt{font-weight:700;color:var(--gold);white-space:nowrap}
+.steps-list{display:flex;flex-direction:column;gap:14px}
+.step-item{display:flex;gap:14px;align-items:flex-start}
+.snum{
+  flex-shrink:0;width:30px;height:30px;border-radius:50%;
+  background:var(--gold);color:#fff;font-size:.82rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;margin-top:2px;
+}
+.stxt{font-size:.88rem;line-height:1.72;color:var(--ink2)}
+.stxt strong{color:var(--ink);display:block;margin-bottom:3px;font-size:.92rem}
+.nut-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.nut-card{
+  background:var(--warm);border-radius:11px;border:1px solid var(--border);
+  padding:14px;text-align:center;
+}
+.nut-card strong{font-size:1.35rem;font-weight:700;color:var(--gold);display:block}
+.nut-card span{font-size:.75rem;color:var(--ink2)}
+.mmap{border-radius:13px;overflow:hidden;border:2px solid var(--border);margin-top:18px}
+.mmap iframe{width:100%;height:230px;border:0}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:8px}
+.mi{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--warm);border-radius:11px;
+  border:1px solid var(--border);padding:12px 14px;gap:9px;
+}
+.mi-l h5{font-size:.88rem;font-weight:700;margin-bottom:2px}
+.mi-l p{font-size:.74rem;color:var(--ink2)}
+.miprice{font-weight:800;color:var(--gold);white-space:nowrap}
+.book-btn{
+  width:100%;margin-top:22px;padding:14px;border-radius:11px;
+  background:var(--gold);color:#fff;font-size:.98rem;font-weight:800;transition:.2s;
+}
+.book-btn:hover{background:#a87830}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:26px;right:26px;z-index:9999;
+  background:var(--ink);color:#fff;
+  padding:13px 20px;border-radius:13px;
+  font-size:.88rem;font-weight:500;
+  display:flex;align-items:center;gap:9px;
+  box-shadow:var(--sh3);max-width:300px;
+  transform:translateY(70px);opacity:0;
+  transition:transform .35s cubic-bezier(.175,.885,.32,1.275),opacity .35s;
+  pointer-events:none;
+}
+.toast.on{transform:translateY(0);opacity:1}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fu{opacity:0}
+.fu.vis{animation:fadeUp .48s ease forwards}
+.fu:nth-child(1){animation-delay:.04s}.fu:nth-child(2){animation-delay:.08s}
+.fu:nth-child(3){animation-delay:.12s}.fu:nth-child(4){animation-delay:.16s}
+.fu:nth-child(5){animation-delay:.20s}.fu:nth-child(6){animation-delay:.24s}
+.fu:nth-child(7){animation-delay:.28s}.fu:nth-child(8){animation-delay:.32s}
+.fu:nth-child(9){animation-delay:.36s}.fu:nth-child(10){animation-delay:.4s}
+.fu:nth-child(11){animation-delay:.44s}.fu:nth-child(12){animation-delay:.48s}
+
+/* FOOTER */
+.footer{background:#0e0904;color:#fff;padding:64px 72px 38px}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.flogo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;margin-bottom:12px}
+.flogo span{color:var(--gold2);font-style:italic}
+.fdesc{font-size:.84rem;opacity:.52;line-height:1.75;margin-bottom:20px}
+.fsocs{display:flex;gap:9px}
+.fsoc{
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.17);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;transition:all .2s;
+}
+.fsoc:hover{border-color:var(--gold2);background:rgba(200,148,58,.18)}
+.fcol h5{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-bottom:15px}
+.fcol li{margin-bottom:9px}
+.fcol a{font-size:.84rem;opacity:.52;transition:opacity .2s}
+.fcol a:hover{opacity:1}
+.fbot{
+  border-top:1px solid rgba(255,255,255,.08);padding-top:24px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:.78rem;opacity:.38;
+}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .sec{padding:60px 36px}.banner{padding:44px 36px;grid-template-columns:1fr}
+  .bimgs{display:none}.footer{padding:52px 36px 30px}.fg{grid-template-columns:1fr 1fr;gap:32px}
+  .r2col{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .nav{padding:0 16px}.nav-links{display:none}.sec{padding:44px 16px}
+  .hero-content{padding:36px 18px}.hstats{gap:20px}
+  .sec-head{flex-direction:column;align-items:flex-start;margin-bottom:28px}
+  .nut-grid{grid-template-columns:1fr 1fr}.menu-grid{grid-template-columns:1fr}
+  .footer{padding:40px 16px 24px}.fg{grid-template-columns:1fr;gap:24px}
+  .fbot{flex-direction:column;gap:7px;text-align:center}
+  .mbody{padding:18px}.mhero{height:240px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="nav">
+  <div class="logo">Nexa<span>Taste</span></div>
+  <div class="nav-links">
+    <a href="#meals" class="active">🍽 Meals</a>
+    <a href="#spicy">🌶 Spicy</a>
+    <a href="#icecream">🍦 Ice Cream</a>
+    <a href="#drinks">🍵 Drinks</a>
+    <a href="#national">🌍 National</a>
+    <a href="#restaurants">🏆 Restaurants</a>
+  </div>
+  <div class="nav-r">
+    <button class="cart-pill" id="cartBtn">🛒 Cart <span class="cart-ct" id="cartCt">0</span></button>
+    <button class="btn-ghost">Sign In</button>
+    <button class="btn-gold">Join Free</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-mosaic" id="hbg"></div>
+    <div class="hero-grad"></div>
+  </div>
+  <div class="hero-content">
+    <div class="eye">Premium World Cuisine</div>
+    <h1 class="hero-h1">Discover the<br>World Through<br><em>Flavour</em></h1>
+    <p class="hero-p">From Michelin-starred kitchens to beloved national dishes — 2,400+ recipes, iconic restaurants and food stories across 30+ countries.</p>
+    <div class="hsearch">
+      <input id="sin" placeholder="Search any dish, country or ingredient…" oninput="gSearch(this.value)">
+      <button onclick="gSearch(document.getElementById('sin').value)">Search</button>
+    </div>
+    <div class="hero-cats">
+      <div class="hcat on" onclick="goSec('meals',this)">🍽 Meals</div>
+      <div class="hcat" onclick="goSec('spicy',this)">🌶 Spicy</div>
+      <div class="hcat" onclick="goSec('icecream',this)">🍦 Ice Cream</div>
+      <div class="hcat" onclick="goSec('drinks',this)">🍵 Drinks</div>
+      <div class="hcat" onclick="goSec('national',this)">🌍 National</div>
+    </div>
+    <div class="hstats">
+      <div class="hst"><strong>2,400+</strong><span>Recipes</span></div>
+      <div class="hst"><strong>31</strong><span>Countries</span></div>
+      <div class="hst"><strong>180</strong><span>Restaurants</span></div>
+      <div class="hst"><strong>4.9★</strong><span>Avg Rating</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: MEALS -->
+<section class="sec" id="meals">
+  <div class="sec-head">
+    <div><div class="sec-sub">Section 1</div><h2 class="sec-title">World Famous Meals</h2></div>
+    <a href="#" class="see-all">All meals →</a>
+  </div>
+  <div class="food-grid" id="mealsGrid"></div>
+</section>
+
+<!-- SECTION 2: SPICY -->
+<section class="sec sec-alt" id="spicy">
+  <div class="sec-head">
+    <div><div class="sec-sub">Section 2</div><h2 class="sec-title">Spicy Foods 🌶🔥</h2></div>
+    <a href="#" class="see-all">All spicy →</a>
+  </div>
+  <div class="food-grid" id="spicyGrid"></div>
+</section>
+
+<!-- CHEF BANNER -->
+<div class="banner">
+  <div class="banner-txt">
+    <div class="beye">Chef's Kitchen Series</div>
+    <h2 class="btitle">Cook Like a<br><em>World-Class Chef</em></h2>
+    <p class="bpara">Step-by-step tutorials from Michelin-star kitchens. Every recipe includes exact measurements, pro tips and full nutritional breakdowns.</p>
+    <button class="btn-gold" onclick="showToast('Tutorials unlocked! 🎓','📚')">Start Cooking</button>
+  </div>
+  <div class="bimgs">
+    <div><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80" alt="Chef"></div>
+    <div><img src="https://images.unsplash.com/photo-1541614101331-1a5a3a194e92?w=400&q=80" alt="Prep"></div>
+    <div><img src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&q=80" alt="Plate"></div>
+  </div>
+</div>
+
+<!-- SECTION 3: ICE CREAM -->
+<section class="sec" id="icecream">
+  <div class="sec-head">
+    <div><div class="sec-sub">Section 3</div><h2 class="sec-title">Ice Creams & Frozen Desserts 🍦🍨</h2></div>
+    <a href="#" class="see-all">All desserts →</a>
+  </div>
+  <div class="food-grid" id="iceGrid"></div>
+</section>
+
+<!-- SECTION 4: DRINKS -->
+<section class="sec sec-alt" id="drinks">
+  <div class="sec-head">
+    <div><div class="sec-sub">Section 4</div><h2 class="sec-title">Teas, Coffees & Juices 🍵☕🥤</h2></div>
+    <a href="#" class="see-all">All drinks →</a>
+  </div>
+  <div class="food-grid" id="drinksGrid"></div>
+</section>
+
+<!-- SECTION 5: NATIONAL -->
+<section class="sec" id="national">
+  <div class="sec-head">
+    <div><div class="sec-sub">Section 5</div><h2 class="sec-title">National Dishes of the World 🌍</h2></div>
+    <a href="#" class="see-all">All countries →</a>
+  </div>
+  <div class="nat-grid" id="natGrid"></div>
+</section>
+
+<!-- RESTAURANTS -->
+<section class="sec sec-alt" id="restaurants">
+  <div class="sec-head">
+    <div><div class="sec-sub">World's Best</div><h2 class="sec-title">Iconic Restaurants 🏆</h2></div>
+    <a href="#" class="see-all">All restaurants →</a>
+  </div>
+  <div class="rest-strip" id="restGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="fg">
+    <div>
+      <div class="flogo">Nexa<span>Taste</span></div>
+      <p class="fdesc">The world's finest food discovery platform — from Michelin stars to beloved street food. Curated recipes, iconic restaurants and food culture across 30+ countries.</p>
+      <div class="fsocs">
+        <a href="#" class="fsoc">𝕏</a><a href="#" class="fsoc">📸</a>
+        <a href="#" class="fsoc">in</a><a href="#" class="fsoc">▶</a>
+      </div>
+    </div>
+    <div class="fcol"><h5>Explore</h5><ul>
+      <li><a href="#meals">World Meals</a></li><li><a href="#spicy">Spicy Foods</a></li>
+      <li><a href="#icecream">Ice Creams</a></li><li><a href="#drinks">Teas & Juices</a></li>
+      <li><a href="#national">National Dishes</a></li>
+    </ul></div>
+    <div class="fcol"><h5>Company</h5><ul>
+      <li><a href="#">About Us</a></li><li><a href="#">Careers</a></li>
+      <li><a href="#">Press</a></li><li><a href="#">Blog</a></li><li><a href="#">Contact</a></li>
+    </ul></div>
+    <div class="fcol"><h5>Legal</h5><ul>
+      <li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li>
+      <li><a href="#">Cookie Policy</a></li><li><a href="#">Accessibility</a></li>
+    </ul></div>
+  </div>
+  <div class="fbot">
+    <span>© 2026 NexaTaste. All rights reserved.</span>
+    <span>Made with ❤️ for food lovers worldwide 🌍</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="oClose(event)">
+  <div class="modal" id="modal">
+    <button class="mclosebtn" onclick="closeM()">✕</button>
+    <div class="mhero">
+      <img id="mImg" src="" alt="">
+      <div class="mhero-grad"></div>
+      <div class="mhero-txt">
+        <h2 id="mTitle"></h2>
+        <div class="mhero-meta" id="mMeta"></div>
+      </div>
+    </div>
+    <div class="mbody">
+      <div class="mtabs" id="mTabs"></div>
+      <div id="mContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span id="tIcon">✅</span><span id="tMsg">Done!</span>
+</div>
+
+<script>
+/* ══ DATA ══════════════════════════════════════════ */
+const MEALS=[
+  {id:'m1',type:'meal',name:'Beef Wellington',country:'United Kingdom',flag:'🇬🇧',
+   img:'https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=80',
+   badge:'Classic',bc:'bm',rating:4.9,reviews:3241,diff:'Medium',time:'90 min',cal:780,
+   desc:'Tender beef fillet wrapped in mushroom duxelles and golden puff pastry. Gordon Ramsay\'s ultimate showpiece dish.',
+   ingr:[{n:'Beef fillet (centre-cut)',a:'800g'},{n:'Puff pastry',a:'500g'},{n:'Chestnut mushrooms',a:'400g'},{n:'Prosciutto di Parma',a:'12 slices'},{n:'Dijon mustard',a:'2 tbsp'},{n:'Egg yolks',a:'2'},{n:'Thyme',a:'4 sprigs'},{n:'Butter',a:'30g'},{n:'Salt & black pepper',a:'to taste'}],
+   steps:[{t:'Sear the fillet',s:'Season beef generously. In a very hot pan sear all sides 2–3 min until golden. Brush with Dijon mustard. Cool completely.'},
+          {t:'Make the duxelles',s:'Blitz mushrooms fine. Cook in butter with thyme until completely dry — about 10 min. Season. Spread on cling film. Cool.'},
+          {t:'Wrap in prosciutto',s:'Lay prosciutto overlapping on cling film. Spread duxelles. Place beef at edge and roll tightly. Refrigerate 30 min.'},
+          {t:'Encase in pastry',s:'Roll pastry to rectangle. Place beef roll in centre. Wrap, sealing edges with egg wash. Refrigerate 15 min.'},
+          {t:'Bake to perfection',s:'Score top, egg-wash generously. Bake 220°C for 25–30 min until deep golden. Rest 10 min before slicing.'}],
+   nut:{cal:780,pro:'58g',carb:'42g',fat:'36g'}},
+
+  {id:'m2',type:'meal',name:'Pasta Carbonara',country:'Italy',flag:'🇮🇹',
+   img:'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=700&q=80',
+   badge:'Michelin',bc:'bm',rating:4.8,reviews:5812,diff:'Easy',time:'25 min',cal:620,
+   desc:'Rome\'s silkiest pasta — no cream, just eggs, Pecorino, guanciale and a perfect emulsion. Authentically Roman since 1944.',
+   ingr:[{n:'Spaghetti or rigatoni',a:'400g'},{n:'Guanciale',a:'200g'},{n:'Egg yolks',a:'4'},{n:'Whole egg',a:'1'},{n:'Pecorino Romano',a:'80g'},{n:'Parmigiano Reggiano',a:'40g'},{n:'Coarse black pepper',a:'2 tsp'},{n:'Pasta cooking water',a:'100ml'}],
+   steps:[{t:'Render the guanciale',s:'Cut into lardons. Cook in cold pan on medium until fat renders and it\'s crisp. Remove from heat. Reserve fat.'},
+          {t:'Make the sauce',s:'Whisk egg yolks and whole egg with grated cheeses and abundant black pepper into a pale creamy paste.'},
+          {t:'Cook pasta al dente',s:'Cook pasta in well-salted boiling water to just al dente. Reserve 200ml starchy water before draining.'},
+          {t:'Create the emulsion',s:'Add hot pasta to guanciale pan OFF heat. Add egg mix and splash of pasta water. Toss constantly — residual heat cooks eggs into a glossy sauce.'},
+          {t:'Plate and serve',s:'Serve immediately with extra Pecorino and a generous grind of black pepper. Never add cream.'}],
+   nut:{cal:620,pro:'32g',carb:'68g',fat:'24g'}},
+
+  {id:'m3',type:'meal',name:'Chicken Biryani',country:'India',flag:'🇮🇳',
+   img:'https://images.unsplash.com/photo-1563379091339-03246963d351?w=700&q=80',
+   badge:'Heritage',bc:'bm',rating:4.9,reviews:7420,diff:'Medium',time:'2 hrs',cal:690,
+   desc:'Hyderabadi dum biryani — fragrant basmati rice layered with slow-cooked spiced chicken, saffron and crispy fried onions.',
+   ingr:[{n:'Basmati rice (soaked)',a:'500g'},{n:'Chicken bone-in',a:'1kg'},{n:'Yoghurt',a:'250ml'},{n:'Fried onions (birista)',a:'3 large'},{n:'Saffron in warm milk',a:'1 pinch / 4 tbsp'},{n:'Whole spices',a:'2 each'},{n:'Ginger-garlic paste',a:'3 tbsp'},{n:'Biryani masala',a:'2 tbsp'},{n:'Ghee',a:'4 tbsp'},{n:'Mint & coriander',a:'large handful'}],
+   steps:[{t:'Marinate the chicken',s:'Mix chicken with yoghurt, ginger-garlic paste, biryani masala, half the fried onions and salt. Marinate 2+ hours.'},
+          {t:'Parboil the rice',s:'Boil soaked basmati with whole spices and salt. Cook only 70% — grains must still have a white core. Drain.'},
+          {t:'Layer the biryani',s:'In heavy pot spread marinated chicken. Top with parboiled rice. Drizzle saffron milk, ghee, mint, fried onions in layers.'},
+          {t:'Dum (steam) cook',s:'Seal pot with foil then lid. Cook on high 5 min, then lowest heat 35 minutes. Trapped steam finishes everything.'},
+          {t:'Serve with raita',s:'Open seal at table for the full aroma experience. Gently mix layers. Serve with cool cucumber raita.'}],
+   nut:{cal:690,pro:'48g',carb:'72g',fat:'22g'}},
+
+  {id:'m4',type:'meal',name:'Peking Duck',country:'China',flag:'🇨🇳',
+   img:'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=700&q=80',
+   badge:'Imperial',bc:'bm',rating:4.8,reviews:2914,diff:'Hard',time:'3 hrs',cal:840,
+   desc:'Beijing\'s crown jewel — lacquered crispy duck skin with paper-thin pancakes, hoisin and spring onion. Served since the Imperial era.',
+   ingr:[{n:'Whole duck',a:'2.5kg'},{n:'Maltose syrup',a:'3 tbsp'},{n:'Rice vinegar',a:'2 tbsp'},{n:'Chinese five-spice',a:'2 tsp'},{n:'Thin pancakes',a:'24'},{n:'Hoisin sauce',a:'6 tbsp'},{n:'Spring onions',a:'6'},{n:'Cucumber',a:'1'}],
+   steps:[{t:'Air-dry the duck',s:'Blanch duck with boiling water. Mix maltose with vinegar and coat skin. Hang or refrigerate uncovered 24 hours.'},
+          {t:'Season and seal',s:'Rub cavity with five-spice. Close with skewers to keep juices inside while the outside crisps.'},
+          {t:'Roast at high heat',s:'Roast at 200°C for 40 min breast-down, then flip to 180°C for 50 more min until skin is deep mahogany and shatteringly crisp.'},
+          {t:'Rest and carve',s:'Rest 10 min. Carve skin separately from meat — the skin is the prized element. Slice meat into thin pieces.'},
+          {t:'Assemble',s:'Spread hoisin on a warm pancake. Add skin and meat, spring onion and cucumber. Fold and eat immediately.'}],
+   nut:{cal:840,pro:'52g',carb:'28g',fat:'58g'}},
+
+  {id:'m5',type:'meal',name:'Lobster Thermidor',country:'France',flag:'🇫🇷',
+   img:'https://images.unsplash.com/photo-1559847844-5315695dadae?w=700&q=80',
+   badge:'Luxury',bc:'bm',rating:4.9,reviews:1832,diff:'Hard',time:'60 min',cal:920,
+   desc:'The ultimate French luxury — lobster in rich cognac cream, gratinéed with Gruyère. A Parisian restaurant icon since 1894.',
+   ingr:[{n:'Live lobster',a:'2 × 700g'},{n:'Cognac',a:'60ml'},{n:'Fish stock',a:'200ml'},{n:'Double cream',a:'200ml'},{n:'Dijon mustard',a:'2 tsp'},{n:'Gruyère (grated)',a:'80g'},{n:'Shallots (minced)',a:'3'},{n:'Tarragon',a:'2 tbsp'},{n:'Butter',a:'60g'}],
+   steps:[{t:'Cook the lobster',s:'Halve live lobsters. Brush with butter and grill cut-side down 6 min. Remove meat from shells; cube. Reserve shells.'},
+          {t:'Flambé with cognac',s:'Sauté shallots in butter. Add lobster, pour in cognac and flambé — tilt pan to ignite. Shake until flames die.'},
+          {t:'Build cream sauce',s:'Add fish stock, reduce by half. Pour in cream, simmer 5 min. Stir in mustard and tarragon. Season carefully.'},
+          {t:'Fill and gratinée',s:'Spoon lobster and sauce back into shells. Top with Gruyère. Grill under broiler 3–4 min until golden and bubbling.'},
+          {t:'Serve elegantly',s:'Serve on warmed plates with crusty baguette and chilled Chardonnay.'}],
+   nut:{cal:920,pro:'74g',carb:'12g',fat:'64g'}},
+
+  {id:'m6',type:'meal',name:'Nigerian Jollof Rice',country:'Nigeria',flag:'🇳🇬',
+   img:'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=700&q=80',
+   badge:'West African',bc:'bm',rating:4.8,reviews:4103,diff:'Easy',time:'55 min',cal:540,
+   desc:'West Africa\'s most celebrated dish — smoky tomato rice cooked over open fire. Nigeria vs Ghana rivalry sold separately.',
+   ingr:[{n:'Long grain rice',a:'500g'},{n:'Plum tomatoes',a:'6'},{n:'Red bell peppers',a:'3'},{n:'Scotch bonnet',a:'1–2'},{n:'Onions',a:'2 large'},{n:'Tomato paste',a:'3 tbsp'},{n:'Chicken stock',a:'600ml'},{n:'Curry powder',a:'1 tsp'},{n:'Thyme & bay leaves',a:'1 tsp / 2'},{n:'Vegetable oil',a:'5 tbsp'}],
+   steps:[{t:'Blend the base',s:'Blend tomatoes, peppers, scotch bonnet and one onion until smooth.'},
+          {t:'Fry tomato stew',s:'Fry sliced onion until golden. Pour in blended mix with tomato paste. Fry on high 15–20 min until dark and caramelised.'},
+          {t:'Add stock and rice',s:'Pour in hot chicken stock. Season. Add washed rice, stir well. Cover tightly.'},
+          {t:'Cook and steam',s:'Bring to boil, then lowest heat 30 min. The bottom caramelised "party jollof" layer is highly prized.'},
+          {t:'Serve',s:'Stir from bottom up. Serve with fried plantain, coleslaw and jerk chicken.'}],
+   nut:{cal:540,pro:'14g',carb:'88g',fat:'16g'}}
+];
+
+const SPICY=[
+  {id:'s1',type:'spicy',name:'Nashville Hot Chicken',country:'USA',flag:'🇺🇸',
+   img:'https://images.unsplash.com/photo-1562967914-608f82629710?w=700&q=80',
+   badge:'🔥🔥🔥',bc:'bs',rating:4.9,reviews:8214,diff:'Medium',time:'45 min',cal:680,
+   desc:'Tennessee\'s most brutal fried chicken — blazed with cayenne paste that made an entire city famous. Prince\'s original recipe.',
+   ingr:[{n:'Chicken pieces',a:'1.2kg'},{n:'Cayenne pepper',a:'4 tbsp'},{n:'Brown sugar',a:'1 tbsp'},{n:'Smoked paprika',a:'2 tbsp'},{n:'Garlic powder',a:'1 tbsp'},{n:'Frying oil',a:'500ml'},{n:'Buttermilk',a:'300ml'},{n:'Flour',a:'300g'},{n:'Pickles & white bread',a:'to serve'}],
+   steps:[{t:'Buttermilk brine',s:'Soak chicken in buttermilk with salt overnight to tenderise and help coating stick.'},
+          {t:'Dredge in flour',s:'Mix flour with 1 tbsp cayenne and salt. Coat chicken, shaking off excess. Double-dip in buttermilk then flour for extra crunch.'},
+          {t:'Deep fry',s:'Fry in 175°C oil for 12–15 min per side until deep mahogany. Work in batches; never crowd the pan.'},
+          {t:'Make the lava paste',s:'Mix cayenne, paprika, sugar, garlic into 4 tbsp hot frying oil. Brush this paste ALL over the hot chicken immediately.'},
+          {t:'Serve Nashville-style',s:'Place on white bread, top with sliced pickles. The bread soaks up the spicy drippings. Have a cold drink ready.'}],
+   nut:{cal:680,pro:'54g',carb:'38g',fat:'32g'}},
+
+  {id:'s2',type:'spicy',name:'Kung Pao Chicken',country:'China',flag:'🇨🇳',
+   img:'https://images.unsplash.com/photo-1525755662778-989d0524087e?w=700&q=80',
+   badge:'🔥🔥',bc:'bs',rating:4.8,reviews:6102,diff:'Easy',time:'30 min',cal:480,
+   desc:'Sichuan classic — velvety chicken with dried chilies and Sichuan peppercorns creating the numbing-spicy "mala" sensation.',
+   ingr:[{n:'Chicken breast (diced)',a:'500g'},{n:'Dried red chilies',a:'15'},{n:'Sichuan peppercorns',a:'1 tsp'},{n:'Roasted peanuts',a:'80g'},{n:'Spring onions',a:'4'},{n:'Soy sauce',a:'3 tbsp'},{n:'Rice vinegar',a:'2 tbsp'},{n:'Sesame oil',a:'1 tbsp'},{n:'Cornflour',a:'2 tsp'},{n:'Sugar',a:'2 tsp'}],
+   steps:[{t:'Velvet the chicken',s:'Toss diced chicken with soy sauce, sesame oil and cornflour. Rest 15 min. Velveting keeps chicken silky.'},
+          {t:'Make the sauce',s:'Mix soy sauce, rice vinegar, sugar and a little cornflour into a slurry. Set aside.'},
+          {t:'Bloom the aromatics',s:'Heat wok until smoking. Add oil, then dried chilies and Sichuan peppercorns. Stir 30 sec until fragrant.'},
+          {t:'Stir-fry',s:'Add chicken, stir-fry on maximum heat 3–4 min. Add spring onions. Pour in sauce and toss until glossy.'},
+          {t:'Finish with peanuts',s:'Add peanuts last so they stay crunchy. Serve over steamed rice immediately.'}],
+   nut:{cal:480,pro:'44g',carb:'22g',fat:'24g'}},
+
+  {id:'s3',type:'spicy',name:'Goan Vindaloo',country:'India',flag:'🇮🇳',
+   img:'https://images.unsplash.com/photo-1574484284002-952d92456975?w=700&q=80',
+   badge:'🔥🔥🔥🔥',bc:'bs',rating:4.7,reviews:4891,diff:'Medium',time:'75 min',cal:560,
+   desc:'Goa\'s Portuguese-Indian hybrid — pork slow-cooked in a ferocious vinegar-chilli paste. One of India\'s hottest dishes.',
+   ingr:[{n:'Pork shoulder (cubed)',a:'800g'},{n:'Kashmiri red chilies (dry)',a:'12'},{n:'Bird\'s eye chilies',a:'6'},{n:'White wine vinegar',a:'4 tbsp'},{n:'Garlic cloves',a:'10'},{n:'Fresh ginger',a:'5cm'},{n:'Cumin seeds',a:'2 tsp'},{n:'Black pepper',a:'1 tsp'},{n:'Onion',a:'2'}],
+   steps:[{t:'Grind the paste',s:'Blend all chilies, garlic, ginger, vinegar and spices into a deep red fragrant paste.'},
+          {t:'Marinate',s:'Coat pork generously in vindaloo paste. Marinate overnight — vinegar tenderises meat and deepens flavour.'},
+          {t:'Cook the base',s:'Fry sliced onions until dark gold. Add remaining paste, fry on high 5 min until oil separates.'},
+          {t:'Slow simmer',s:'Add marinated pork with all paste and water to cover. Simmer covered 45–60 min until pork is meltingly tender.'},
+          {t:'Balance and serve',s:'Add salt and a pinch of sugar to balance. Serve with plain rice. Do not be afraid of the heat.'}],
+   nut:{cal:560,pro:'48g',carb:'18g',fat:'32g'}},
+
+  {id:'s4',type:'spicy',name:'Korean Tteokbokki',country:'South Korea',flag:'🇰🇷',
+   img:'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=700&q=80',
+   badge:'🔥🔥',bc:'bs',rating:4.8,reviews:5634,diff:'Easy',time:'20 min',cal:390,
+   desc:'Seoul street food royalty — chewy rice cakes smothered in a sweet-spicy gochujang sauce. Korea\'s most beloved snack.',
+   ingr:[{n:'Rice cakes (tteok)',a:'400g'},{n:'Gochujang',a:'3 tbsp'},{n:'Gochugaru',a:'1 tbsp'},{n:'Soy sauce',a:'2 tbsp'},{n:'Sugar',a:'2 tbsp'},{n:'Anchovy stock',a:'400ml'},{n:'Fish cakes',a:'200g'},{n:'Spring onions',a:'4'},{n:'Sesame seeds',a:'1 tsp'}],
+   steps:[{t:'Prepare the stock',s:'Simmer anchovy and kelp in water 10 min. Strain. This dashi-style stock gives authentic depth.'},
+          {t:'Make the sauce',s:'Combine gochujang, gochugaru, soy sauce and sugar in stock. Bring to boil stirring to dissolve.'},
+          {t:'Add rice cakes',s:'Soak refrigerated rice cakes in water 20 min first. Add to simmering sauce and cook 8–10 min until soft and chewy.'},
+          {t:'Add fish cakes',s:'Add sliced fish cakes and cook 3 more min. Sauce should be thick and clinging.'},
+          {t:'Garnish and serve',s:'Top with spring onions and sesame seeds. Serve immediately in the pan.'}],
+   nut:{cal:390,pro:'18g',carb:'72g',fat:'6g'}},
+
+  {id:'s5',type:'spicy',name:'Piri Piri Chicken',country:'Portugal',flag:'🇵🇹',
+   img:'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?w=700&q=80',
+   badge:'🔥🔥🔥',bc:'bs',rating:4.8,reviews:3912,diff:'Easy',time:'50 min',cal:520,
+   desc:'Mozambique-born, Portuguese-perfected — Nando\'s famous secret: spatchcocked chicken in fiery African bird\'s eye chilli marinade.',
+   ingr:[{n:'Whole chicken (spatchcocked)',a:'1.5kg'},{n:'Piri piri chilies',a:'10'},{n:'Garlic cloves',a:'8'},{n:'Red bell pepper',a:'1'},{n:'Lemon juice',a:'4 tbsp'},{n:'Smoked paprika',a:'2 tbsp'},{n:'Dried oregano',a:'1 tbsp'},{n:'Olive oil',a:'80ml'},{n:'Red wine vinegar',a:'2 tbsp'}],
+   steps:[{t:'Char the peppers',s:'Char bell pepper and half the chilies over flame or under broiler. Peel and deseed. The char adds depth.'},
+          {t:'Blend piri piri',s:'Blend charred peppers, remaining chilies, garlic, lemon, paprika, oregano, vinegar and oil into a vibrant orange sauce.'},
+          {t:'Marinate overnight',s:'Score the chicken deeply. Rub ¾ of piri piri sauce under skin and over surface. Marinate overnight in fridge.'},
+          {t:'Grill over charcoal',s:'Grill on hot charcoal, turning every 5 min, basting with reserved sauce. Total 35–40 min.'},
+          {t:'Rest and carve',s:'Rest 8 min. Serve with chips and extra piri piri sauce. The Portuguese way: messy, bold, glorious.'}],
+   nut:{cal:520,pro:'62g',carb:'8g',fat:'28g'}},
+
+  {id:'s6',type:'spicy',name:'Tom Yum Soup',country:'Thailand',flag:'🇹🇭',
+   img:'https://images.unsplash.com/photo-1548943487-a2e4e43b4853?w=700&q=80',
+   badge:'🔥🔥',bc:'bs',rating:4.8,reviews:6741,diff:'Easy',time:'25 min',cal:280,
+   desc:'Thailand\'s national soup — an electric balance of hot, sour, salty and fragrant. Named for the Thai words "boil" and "mix".',
+   ingr:[{n:'Tiger prawns',a:'400g'},{n:'Lemongrass stalks',a:'3'},{n:'Galangal slices',a:'6'},{n:'Kaffir lime leaves',a:'5'},{n:'Bird\'s eye chilies',a:'5'},{n:'Fish sauce',a:'3 tbsp'},{n:'Lime juice',a:'4 tbsp'},{n:'Chicken stock',a:'800ml'},{n:'Coconut milk',a:'100ml'},{n:'Straw mushrooms',a:'200g'}],
+   steps:[{t:'Simmer the aromatics',s:'Bruise lemongrass, galangal and lime leaves. Simmer in stock 10 min. This is the soup\'s soul.'},
+          {t:'Add heat and mushrooms',s:'Add split chilies and mushrooms. Simmer 3 more min.'},
+          {t:'Add prawns',s:'Add prawns — cook just 2–3 min until pink. Overcooking makes them rubbery.'},
+          {t:'Season with the trinity',s:'Season with fish sauce (salt), lime juice (sour), and a pinch of sugar. Tom Yum is all about perfect hot-sour-salty balance.'},
+          {t:'Finish and serve',s:'Add a splash of coconut milk. Top with coriander. Serve with jasmine rice.'}],
+   nut:{cal:280,pro:'38g',carb:'14g',fat:'8g'}}
+];
+
+const ICE=[
+  {id:'i1',type:'ice',name:'Matcha Mochi Ice Cream',country:'Japan',flag:'🇯🇵',
+   img:'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=700&q=80',
+   badge:'Japanese',bc:'bi',rating:4.9,reviews:4821,diff:'Medium',time:'4 hrs',cal:220,
+   desc:'Ceremonial grade matcha ice cream wrapped in a soft, chewy mochi shell. Japan\'s most elegant frozen treat.',
+   ingr:[{n:'Mochiko (sweet rice flour)',a:'200g'},{n:'Sugar',a:'100g'},{n:'Water',a:'200ml'},{n:'Ceremonial matcha',a:'3 tbsp'},{n:'Double cream',a:'400ml'},{n:'Condensed milk',a:'200ml'},{n:'Cornflour (dusting)',a:'4 tbsp'}],
+   steps:[{t:'Make matcha ice cream',s:'Sift matcha into condensed milk, whisk smooth. Fold in whipped cream. Freeze scoops on lined tray 4 hours.'},
+          {t:'Mix mochi dough',s:'Whisk mochiko, sugar and water. Microwave 2 min, stir. Microwave 90 more sec until glossy and stretchy.'},
+          {t:'Knead and roll',s:'Turn out onto cornflour-dusted surface. Knead briefly. Roll to 5mm. Cut into 12cm circles.'},
+          {t:'Wrap ice cream',s:'Working fast, place a frozen scoop in centre of each mochi circle. Pull edges up and pinch firmly to seal.'},
+          {t:'Freeze and serve',s:'Freeze 1 hour minimum. Remove 3 min before eating — the mochi should be chewy, not rock hard.'}],
+   nut:{cal:220,pro:'4g',carb:'38g',fat:'8g'}},
+
+  {id:'i2',type:'ice',name:'Gelato al Pistacchio',country:'Italy',flag:'🇮🇹',
+   img:'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=700&q=80',
+   badge:'Sicilian',bc:'bi',rating:4.9,reviews:6203,diff:'Hard',time:'6 hrs',cal:310,
+   desc:'Bronte pistachios from Sicily\'s volcanic slopes make the world\'s finest pistachio gelato — dense, intense and impossibly green.',
+   ingr:[{n:'Unsalted Bronte pistachios',a:'200g'},{n:'Whole milk',a:'500ml'},{n:'Double cream',a:'200ml'},{n:'Egg yolks',a:'5'},{n:'Sugar',a:'180g'},{n:'Pistachio paste',a:'3 tbsp'},{n:'Sea salt flakes',a:'pinch'}],
+   steps:[{t:'Roast and grind',s:'Roast pistachios at 160°C for 8 min. Cool, then blitz with a pinch of sugar to a fine green paste.'},
+          {t:'Make custard base',s:'Heat milk and cream to steaming. Whisk yolks and sugar until pale. Pour hot milk over yolks slowly, whisking constantly.'},
+          {t:'Cook to 82°C',s:'Return to pan over medium heat. Stir until custard coats the spoon and reaches 82°C. Do not boil.'},
+          {t:'Add pistachio',s:'Remove from heat, strain, whisk in pistachio paste and sea salt. Chill completely — minimum 4 hours.'},
+          {t:'Churn and freeze',s:'Churn in ice cream machine per manufacturer\'s instructions. Freeze 2 hours. Gelato should be dense with less air than ice cream.'}],
+   nut:{cal:310,pro:'7g',carb:'32g',fat:'18g'}},
+
+  {id:'i3',type:'ice',name:'Mango Kulfi',country:'India',flag:'🇮🇳',
+   img:'https://images.unsplash.com/photo-1488900128323-21503983a07e?w=700&q=80',
+   badge:'Traditional',bc:'bi',rating:4.8,reviews:3410,diff:'Easy',time:'8 hrs',cal:280,
+   desc:'India\'s ancient frozen dessert — no churn, no machine. Rich reduced milk with Alphonso mango, saffron and cardamom.',
+   ingr:[{n:'Full-fat milk',a:'1 litre'},{n:'Alphonso mango pulp',a:'300g'},{n:'Condensed milk',a:'150ml'},{n:'Double cream',a:'100ml'},{n:'Green cardamom (ground)',a:'1 tsp'},{n:'Saffron in warm milk',a:'good pinch'},{n:'Pistachios (chopped)',a:'50g'},{n:'Sugar',a:'3 tbsp'}],
+   steps:[{t:'Reduce the milk',s:'Simmer milk on medium heat 30–40 min stirring often, until reduced to one-third. It should be thick and creamy.'},
+          {t:'Add flavours',s:'Stir in condensed milk, mango pulp, sugar, cardamom and saffron milk. Mix well.'},
+          {t:'Add cream',s:'Remove from heat. Stir in double cream. Cool completely then refrigerate 1 hour.'},
+          {t:'Mould and freeze',s:'Pour into kulfi moulds or small cups. Press a stick into each. Cover with foil and freeze 6+ hours.'},
+          {t:'Unmould and serve',s:'Run mould under warm water 10 sec to release. Sprinkle with chopped pistachios.'}],
+   nut:{cal:280,pro:'8g',carb:'42g',fat:'10g'}},
+
+  {id:'i4',type:'ice',name:'Taiwanese Shaved Ice (Baobing)',country:'Taiwan',flag:'🇹🇼',
+   img:'https://images.unsplash.com/photo-1557142046-c704a3adf364?w=700&q=80',
+   badge:'Taiwanese',bc:'bi',rating:4.7,reviews:2895,diff:'Easy',time:'20 min',cal:220,
+   desc:'Taiwan\'s iconic snow-fine shaved ice — a cloud-like mountain of frozen milk topped with mango, taro, red bean and condensed milk.',
+   ingr:[{n:'Whole milk (frozen into blocks)',a:'1 litre'},{n:'Ripe Ataulfo mango (diced)',a:'2'},{n:'Taro balls (cooked)',a:'200g'},{n:'Sweetened red beans',a:'150g'},{n:'Condensed milk',a:'4 tbsp'},{n:'Mango syrup',a:'3 tbsp'},{n:'Basil seeds',a:'1 tbsp'},{n:'Strawberry jelly cubes',a:'optional'}],
+   steps:[{t:'Freeze the milk',s:'Pour whole milk into flat containers and freeze completely solid — at least 8 hours. The milk, not water, makes it creamy not icy.'},
+          {t:'Shave the ice',s:'Run frozen milk through a shaving machine set to the finest setting. The result should be like fresh snow, not crushed ice.'},
+          {t:'Cook the taro balls',s:'Boil taro balls 12 min in water until they float. Toss in brown sugar syrup while hot so they\'re glossy and chewy.'},
+          {t:'Build the mountain',s:'Pile shaved milk ice high — it should be a dramatic mound. The presentation IS part of the experience.'},
+          {t:'Add toppings',s:'Drizzle condensed milk and mango syrup over the mountain. Add mango, taro balls, red bean, basil seeds and jelly. Eat fast!'}],
+   nut:{cal:220,pro:'6g',carb:'42g',fat:'5g'}}
+];
+
+const DRINKS=[
+  {id:'d1',type:'drink',name:'Masala Chai',country:'India',flag:'🇮🇳',
+   img:'https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=700&q=80',
+   badge:'Beloved',bc:'bd',rating:4.9,reviews:9102,diff:'Easy',time:'15 min',cal:120,
+   desc:'The world\'s most comforting tea — Assam simmered with fresh ginger, cardamom, cinnamon and black pepper in whole milk.',
+   ingr:[{n:'Strong Assam tea',a:'2 tsp'},{n:'Whole milk',a:'300ml'},{n:'Water',a:'150ml'},{n:'Fresh ginger (grated)',a:'2cm'},{n:'Green cardamom (crushed)',a:'5 pods'},{n:'Cinnamon stick',a:'1'},{n:'Black peppercorns (crushed)',a:'5'},{n:'Cloves',a:'2'},{n:'Jaggery or sugar',a:'2 tsp'}],
+   steps:[{t:'Crush the spices',s:'Lightly crush cardamom, peppercorns and cloves with a mortar to release oils without making the tea gritty.'},
+          {t:'Simmer spices in water',s:'Add spices, grated ginger and cinnamon to water. Bring to boil, then simmer 5 min.'},
+          {t:'Add tea leaves',s:'Add Assam tea leaves. Simmer 2 more min. The colour should be very deep — almost burgundy.'},
+          {t:'Add milk and sweeten',s:'Pour in cold whole milk and add jaggery. Bring to a rolling boil, then reduce.'},
+          {t:'Boil up and strain',s:'Let chai "rise" to the top of the pan twice — key for flavour depth. Strain into glasses. Sip slowly.'}],
+   nut:{cal:120,pro:'6g',carb:'14g',fat:'4g'}},
+
+  {id:'d2',type:'drink',name:'Vietnamese Iced Coffee',country:'Vietnam',flag:'🇻🇳',
+   img:'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=700&q=80',
+   badge:'Iconic',bc:'bd',rating:4.9,reviews:7841,diff:'Easy',time:'5 min',cal:180,
+   desc:'Cà Phê Sữa Đá — robusta drip-brewed through a phin filter, sweetened with condensed milk and poured over ice. Life-changing.',
+   ingr:[{n:'Vietnamese Robusta (coarse grind)',a:'2 tbsp per cup'},{n:'Sweetened condensed milk',a:'2 tbsp per cup'},{n:'Hot water (90°C)',a:'100ml per cup'},{n:'Ice cubes',a:'generous'},{n:'Phin filter',a:'1'}],
+   steps:[{t:'Prepare the phin',s:'Spoon ground coffee into phin filter. Press down very lightly — too hard blocks the drip.'},
+          {t:'Bloom the coffee',s:'Pour a little hot water just to wet the grounds. Wait 30 sec for them to bloom.'},
+          {t:'Fill and drip',s:'Fill with 90°C water. Cover. Vietnamese coffee drips slowly — one drop per second. This takes 4–5 min. Patience.'},
+          {t:'Layer over condensed milk',s:'Place condensed milk in bottom of a glass. Pour coffee directly over. Stir until the milk swirls up.'},
+          {t:'Pour over ice',s:'Fill a tall glass with ice. Pour the coffee-milk mixture over. Drink through a straw.'}],
+   nut:{cal:180,pro:'4g',carb:'28g',fat:'6g'}},
+
+  {id:'d3',type:'drink',name:'Moroccan Mint Tea',country:'Morocco',flag:'🇲🇦',
+   img:'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=700&q=80',
+   badge:'Ceremony',bc:'bd',rating:4.8,reviews:5312,diff:'Easy',time:'10 min',cal:80,
+   desc:'Ataï — Morocco\'s ceremonial green tea with spearmint and sugar, poured from a height for froth. Refusing a cup is rude.',
+   ingr:[{n:'Chinese gunpowder green tea',a:'2 tsp'},{n:'Fresh spearmint (nana)',a:'large bunch'},{n:'Sugar (lots)',a:'4–6 tsp'},{n:'Boiling water',a:'500ml'},{n:'Mint sprigs (garnish)',a:'for each glass'}],
+   steps:[{t:'Rinse the teapot',s:'Pre-warm a Moroccan teapot with boiling water. Swirl to heat the metal.'},
+          {t:'Rinse the tea',s:'Add gunpowder tea to pot. Pour a little boiling water, swirl 30 sec, then pour it OUT. This removes bitterness. Moroccan secret.'},
+          {t:'Steep with mint',s:'Fill with boiling water. Pack in fresh spearmint. Add sugar (be generous — the Moroccan way is very sweet). Steep 3–4 min.'},
+          {t:'Taste and adjust',s:'Pour a cup back into the pot. Taste — adjust sugar. The tea should be fragrant, sweet and green.'},
+          {t:'Pour from height',s:'Lift the teapot high above the glass as you pour — this aerates the tea and creates a thin froth. The higher the pour, the more froth.'}],
+   nut:{cal:80,pro:'1g',carb:'20g',fat:'0g'}},
+
+  {id:'d4',type:'drink',name:'Bubble Tea (Boba)',country:'Taiwan',flag:'🇹🇼',
+   img:'https://images.unsplash.com/photo-1558857563-b371033873b8?w=700&q=80',
+   badge:'Global',bc:'bd',rating:4.8,reviews:11042,diff:'Easy',time:'30 min',cal:320,
+   desc:'The drink that took over the world — brown sugar boba pearls in creamy milk tea. Born in Taichung, Taiwan in the 1980s.',
+   ingr:[{n:'Black tapioca pearls',a:'80g dry'},{n:'Strong black tea (brewed)',a:'300ml'},{n:'Whole milk or oat milk',a:'200ml'},{n:'Brown sugar syrup',a:'3 tbsp'},{n:'Brown sugar (for pearls)',a:'50g'},{n:'Water (for boiling)',a:'1 litre'},{n:'Ice',a:'generous'}],
+   steps:[{t:'Cook the pearls',s:'Boil pearls in 1 litre water for 25 min. They should be chewy throughout. Drain and rinse.'},
+          {t:'Brown sugar coating',s:'Toss hot pearls with brown sugar in a warm pan 2 min until each pearl is coated and glossy.'},
+          {t:'Brew strong tea',s:'Brew very strong black tea and let it cool. It will be diluted by milk and ice.'},
+          {t:'Mix the drink',s:'Combine cooled tea, milk and brown sugar syrup in a shaker with ice. Shake vigorously 15 sec.'},
+          {t:'Layer and serve',s:'Spoon pearls into tall glass. Pour shaken tea over. The brown sugar will streak up the glass like tiger stripes. Oversized straw required.'}],
+   nut:{cal:320,pro:'4g',carb:'68g',fat:'6g'}},
+
+  {id:'d5',type:'drink',name:'Dalgona Coffee',country:'South Korea',flag:'🇰🇷',
+   img:'https://images.unsplash.com/photo-1590439471364-192aa70c0b53?w=700&q=80',
+   badge:'Viral',bc:'bd',rating:4.7,reviews:8912,diff:'Easy',time:'10 min',cal:160,
+   desc:'South Korea\'s whipped coffee that conquered the internet — clouds of sweet coffee foam over cold milk. Hypnotic to make and drink.',
+   ingr:[{n:'Instant coffee',a:'2 tbsp'},{n:'Sugar',a:'2 tbsp'},{n:'Hot water',a:'2 tbsp'},{n:'Cold milk (whole or oat)',a:'250ml per glass'},{n:'Ice',a:'generous'},{n:'Cocoa powder (optional)',a:'for dusting'}],
+   steps:[{t:'Combine the three',s:'Add instant coffee, sugar and hot water in EQUAL ratios to a bowl. The 1:1:1 ratio is non-negotiable.'},
+          {t:'Whip vigorously',s:'Whisk — by hand 8–10 min, electric 3–4 min. You\'ll pass through a custard stage, then it becomes light, stiff and glossy.'},
+          {t:'Check for stiff peaks',s:'The foam is ready when it holds stiff peaks like meringue. Lift the whisk: if peak falls, keep whipping.'},
+          {t:'Prepare the glass',s:'Fill a glass with ice. Pour cold milk over — leave 3cm of space at the top for the foam.'},
+          {t:'Crown with foam',s:'Spoon whipped coffee foam on top. Dust with cocoa powder. Stir before drinking to let coffee dissolve into the milk gradually.'}],
+   nut:{cal:160,pro:'6g',carb:'24g',fat:'4g'}},
+
+  {id:'d6',type:'drink',name:'Tamarind Agua Fresca',country:'Mexico',flag:'🇲🇽',
+   img:'https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=700&q=80',
+   badge:'Street',bc:'bd',rating:4.7,reviews:3201,diff:'Easy',time:'15 min',cal:140,
+   desc:'Mexico\'s most refreshing street drink — tangy, earthy tamarind pulp with sugar and lime over crushed ice. Pure sunshine.',
+   ingr:[{n:'Fresh tamarind pods',a:'200g'},{n:'Water',a:'500ml'},{n:'Sugar',a:'4–6 tbsp'},{n:'Lime juice',a:'2 tbsp'},{n:'Chilli powder (optional)',a:'pinch'},{n:'Ice',a:'generous'},{n:'Sparkling water (optional)',a:'to top'}],
+   steps:[{t:'Extract tamarind pulp',s:'Break open pods, remove fibres and seeds. Soak pulp in warm water 10 min until softened. Squeeze and mash by hand.'},
+          {t:'Strain the liquid',s:'Pass through a fine sieve, pressing all pulp through. Discard seeds and fibres. Liquid should be deep amber-brown.'},
+          {t:'Sweeten and balance',s:'Add sugar, stir until dissolved. Add lime juice. Should be pleasantly tart with sugar just taming the sourness.'},
+          {t:'Chill and serve',s:'Fill tall glasses with crushed ice. Pour tamarind agua fresca over.'},
+          {t:'Mexican finish',s:'A sprinkle of chilli powder and a chilli-salt rim is the street vendor\'s flourish. Garnish with a lime wedge and straw.'}],
+   nut:{cal:140,pro:'1g',carb:'36g',fat:'0g'}}
+];
+
+const NATIONAL=[
+  {id:'n1',country:'Italy',flag:'🇮🇹',dish:'Lasagne al Forno',img:'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=500&q=80',
+   desc:'Layers of fresh pasta, slow-cooked Bolognese ragù, béchamel and Parmigiano Reggiano.',time:'3 hrs',diff:'Medium',
+   ingr:['Fresh lasagne sheets 500g','Beef & pork mince 600g','Béchamel sauce 500ml','Parmigiano Reggiano 150g','San Marzano tomatoes 400g','Red wine 200ml','Soffritto (onion, carrot, celery)','Nutmeg & bay leaves'],
+   steps:['Make slow ragù: brown mince, add soffritto, wine, tomatoes. Simmer 2 hours.','Make béchamel: butter, flour, milk, nutmeg. Cook until thick.','Layer: pasta → ragù → béchamel → cheese. Repeat 4 times.','Bake at 180°C for 45 minutes until golden and bubbling.','Rest 15 minutes before serving.']},
+  {id:'n2',country:'Japan',flag:'🇯🇵',dish:'Tonkotsu Ramen',img:'https://images.unsplash.com/photo-1569050467447-ce54b3bbc37d?w=500&q=80',
+   desc:'Creamy pork bone broth simmered 12 hours with thin noodles, chashu pork and soft-boiled eggs.',time:'12 hrs',diff:'Hard',
+   ingr:['Pork trotters & neck bones 2kg','Thin ramen noodles 400g','Chashu pork belly 500g','Soy sauce tare 4 tbsp','Menma (bamboo shoots)','Nori & spring onions','Soft-boiled marinated eggs','Sesame oil'],
+   steps:['Blanch pork bones, then simmer aggressively 12 hours until broth is milky white.','Roll and braise pork belly in soy, mirin and sake for 2 hours.','Make tare: soy, mirin, sake reduced.','Cook noodles al dente separately.','Assemble: tare → hot broth → noodles → toppings.']},
+  {id:'n3',country:'France',flag:'🇫🇷',dish:'Coq au Vin',img:'https://images.unsplash.com/photo-1598103442097-8b74394b95c7?w=500&q=80',
+   desc:'Chicken braised in red Burgundy wine with pearl onions, mushrooms and lardons.',time:'2.5 hrs',diff:'Medium',
+   ingr:['Free-range chicken jointed','Burgundy red wine 750ml','Lardons 200g','Pearl onions 200g','Button mushrooms 250g','Chicken stock 200ml','Cognac 2 tbsp','Garlic, thyme, bay leaves'],
+   steps:['Brown chicken pieces in butter. Set aside.','Fry lardons, pearl onions and mushrooms.','Flambé with cognac. Add wine, stock and herbs.','Return chicken. Braise covered at 160°C for 1.5 hours.','Thicken sauce with butter-flour paste. Serve with crusty bread.']},
+  {id:'n4',country:'Spain',flag:'🇪🇸',dish:'Paella Valenciana',img:'https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=500&q=80',
+   desc:'Valencia\'s original — sacred flat rice with rabbit, chicken, green beans and snails over orange wood fire.',time:'1.5 hrs',diff:'Hard',
+   ingr:['Bomba or Calasparra rice 500g','Chicken jointed 600g','Rabbit 400g','Flat green beans 200g','Butter beans 100g','Saffron large pinch','Sweet paprika 2 tsp','Chicken stock 1.5 litres','Olive oil & rosemary'],
+   steps:['Heat oil in wide paella pan. Brown chicken and rabbit until golden.','Add beans. Push to edges.','Fry tomato and garlic until dark and jammy.','Add paprika, then rice — stir to coat.','Pour in saffron stock. Arrange evenly. Do NOT stir again. Aim for socarrat (crispy bottom).']},
+  {id:'n5',country:'India',flag:'🇮🇳',dish:'Butter Chicken',img:'https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=500&q=80',
+   desc:'Murgh Makhani — the dish that conquered the world. Chargrilled tandoori chicken in a velvety tomato-butter-cream sauce.',time:'2 hrs',diff:'Medium',
+   ingr:['Chicken thighs 1kg','Spiced yoghurt marinade','Butter 80g','Tomatoes 600g','Double cream 150ml','Cashew paste 3 tbsp','Garam masala & kasuri methi','Sugar 1 tsp'],
+   steps:['Marinate chicken overnight in spiced yoghurt. Grill until charred.','Blend tomatoes, cook in butter with whole spices until thick.','Add cashew paste. Blend sauce very smooth.','Add cream and kasuri methi. Simmer 10 minutes.','Add grilled chicken. Finish with cold butter for gloss.']},
+  {id:'n6',country:'Mexico',flag:'🇲🇽',dish:'Mole Negro',img:'https://images.unsplash.com/photo-1615361200141-f45040f367be?w=500&q=80',
+   desc:'Oaxaca\'s legendary black mole — 30+ ingredients including dried chilies, dark chocolate and spices.',time:'3 days',diff:'Hard',
+   ingr:['Ancho, mulato, pasilla chilies 6 each','Dark chocolate 100g','Ripe tomatoes & tomatillos 400g','Fried plantain','Stale bread & sesame seeds','Cinnamon, cumin, cloves','Turkey or chicken 1 whole','Chicken stock 2 litres'],
+   steps:['Toast and rehydrate chilies. Toast seeds and spices. Fry plantain and bread.','Blend everything into a smooth, very dark paste.','Fry the mole paste in lard until it darkens and smells complex.','Add stock slowly, simmer 45 min. Add broken chocolate. Season.','Serve over turkey with rice. One mole negro contains more flavour than most dishes combined.']},
+  {id:'n7',country:'Thailand',flag:'🇹🇭',dish:'Pad Thai',img:'https://images.unsplash.com/photo-1559314809-0d155014e29e?w=500&q=80',
+   desc:'Thailand\'s national stir-fry — rice noodles with shrimp, eggs, bean sprouts and the perfect tamarind-fish sauce balance.',time:'20 min',diff:'Easy',
+   ingr:['Flat rice noodles 200g','Tiger prawns 300g','Eggs 2','Bean sprouts 100g','Spring onions 3','Tamarind paste 3 tbsp','Fish sauce 2 tbsp','Sugar 1 tbsp','Crushed peanuts 50g','Lime, chilli flakes'],
+   steps:['Soak noodles in cold water 30 min until pliable but firm.','Mix tamarind, fish sauce and sugar into Pad Thai sauce.','Stir-fry prawns in screaming hot wok. Push aside.','Add noodles and sauce. Toss on high heat.','Push to side, scramble eggs. Add bean sprouts. Serve with peanuts and lime.']},
+  {id:'n8',country:'Morocco',flag:'🇲🇦',dish:'Chicken Tagine',img:'https://images.unsplash.com/photo-1511690656952-34342bb7c2f2?w=500&q=80',
+   desc:'Slow-braised chicken with preserved lemons, olives, ginger and saffron in the iconic conical clay pot.',time:'1.5 hrs',diff:'Easy',
+   ingr:['Chicken thighs 1.2kg','Preserved lemons 2','Green olives 100g','Saffron pinch','Ground ginger 2 tsp','Ras el hanout 1 tbsp','Onion 2','Fresh coriander','Olive oil 4 tbsp','Chicken stock 200ml'],
+   steps:['Marinate chicken with spices and olive oil for 2 hours.','Brown chicken in tagine. Remove and set aside.','Fry sliced onions until golden, add remaining spices.','Return chicken, add stock, saffron, preserved lemons and olives.','Cover tightly and braise on very low heat 1 hour. Garnish with coriander.']},
+  {id:'n9',country:'South Korea',flag:'🇰🇷',dish:'Kimchi Jjigae',img:'https://images.unsplash.com/photo-1580651315530-69c8e0026377?w=500&q=80',
+   desc:'Korea\'s national soul food — deeply fermented kimchi simmered into a bubbling stew with pork belly and silken tofu.',time:'40 min',diff:'Easy',
+   ingr:['Well-fermented kimchi 400g','Pork belly 300g','Silken tofu 300g','Gochugaru 2 tbsp','Gochujang 1 tbsp','Soy sauce 2 tbsp','Sesame oil 1 tsp','Garlic 4 cloves','Spring onions & sesame seeds'],
+   steps:['Fry pork belly until lightly browned. Add minced garlic.','Add kimchi and its brine — the brine is packed with flavour. Fry 5 min.','Add gochugaru, gochujang and soy sauce.','Add 400ml water. Simmer 20 min until the stew deepens.','Add silken tofu in large chunks. Simmer 5 more min. Drizzle sesame oil. Serve over rice.']},
+  {id:'n10',country:'Peru',flag:'🇵🇪',dish:'Ceviche Clásico',img:'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=500&q=80',
+   desc:'Lima\'s national treasure — fresh sea bass cured in tiger\'s milk with aji amarillo, red onion and corn.',time:'30 min',diff:'Easy',
+   ingr:['Very fresh sea bass 600g','Lime juice (12 limes)','Aji amarillo paste 2 tbsp','Red onion 1 large','Fresh coriander','Choclo corn','Cancha (toasted corn)','Salt, celery, garlic'],
+   steps:['Cut fish into 2cm cubes. Season with salt. Refrigerate.','Blend lime juice with garlic, celery and a piece of fish to make leche de tigre.','Pour leche de tigre over fish. Add aji amarillo paste. Acid "cooks" fish in 3–5 minutes.','Add thinly sliced red onion and coriander. Mix gently.','Serve immediately with choclo, cancha and sweet potato.']},
+  {id:'n11',country:'Lebanon',flag:'🇱🇧',dish:'Grand Mezze',img:'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=500&q=80',
+   desc:'Lebanon\'s communal feast — dozens of small plates including hummus, tabbouleh, kibbeh and warm pita.',time:'1.5 hrs',diff:'Medium',
+   ingr:['Chickpeas (cooked) 400g','Tahini 4 tbsp','Bulgur wheat 100g','Flat-leaf parsley 2 bunches','Lamb mince 300g','Pine nuts & allspice','Warm pita bread','Olive oil & za\'atar'],
+   steps:['Blend hummus: chickpeas, tahini, lemon, garlic, ice-cold water.','Make tabbouleh: parsley-dominant, bulgur minimal.','Shape and fry kibbeh: bulgur-lamb shell with spiced lamb-pine nut filling.','Warm pita directly over a gas flame.','Arrange everything generously. Pour olive oil and za\'atar over hummus. Share.']},
+  {id:'n12',country:'Turkey',flag:'🇹🇷',dish:'Döner Kebab',img:'https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=500&q=80',
+   desc:'Bursa\'s greatest gift to the world — seasoned stacked meat on a vertical rotisserie. The original street food revolution.',time:'3 hrs',diff:'Hard',
+   ingr:['Lamb shoulder (ground fine) 1kg','Beef mince 500g','Onion (grated, squeezed dry) 2','Garlic cloves 6','Paprika, cumin, oregano, sumac','Egg 1','Flatbread or lavash','Tomatoes, pickled cabbage, garlic sauce'],
+   steps:['Combine meats, grated onion, garlic and spices. Mix vigorously until smooth and sticky.','Pack onto vertical skewer, pressing very firmly. Refrigerate 2 hours.','Roast vertically near heat source until outer layer is browned.','Shave thin slices from the outer crust — the authentic technique.','Serve in warm flatbread with tomato, pickled cabbage, red onion and garlic yoghurt sauce.']}
+];
+
+const RESTS=[
+  {id:'r1',name:'Osteria Francescana',country:'Italy',flag:'🇮🇹',
+   img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80',
+   rating:4.9,price:'$$$',reviews:3241,
+   desc:'Three Michelin stars. Massimo Bottura\'s avant-garde Italian kitchen in Modena. Former world #1.',
+   tags:['Michelin ★★★','Fine Dining','Italian'],
+   specialty:'Oops! I Dropped the Lemon Tart',
+   mapQ:'Osteria+Francescana+Modena+Italy',
+   menu:[{n:'5 Senses Tasting',d:'7 courses with wine',p:'$220'},{n:'Tagliatelle al Ragù',d:'Bologna ragù reimagined',p:'$55'},{n:'Lemon Tart',d:'Signature smashed dessert',p:'$28'}]},
+  {id:'r2',name:'Noma',country:'Denmark',flag:'🇩🇰',
+   img:'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700&q=80',
+   rating:4.9,price:'$$$',reviews:2887,
+   desc:'René Redzepi\'s legendary Copenhagen restaurant. Pioneered New Nordic cuisine. 4× World\'s Best.',
+   tags:['Michelin ★★','New Nordic','Foraging'],
+   specialty:'Reindeer Moss Snack',
+   mapQ:'Noma+Copenhagen+Denmark',
+   menu:[{n:'Vegetable Season Menu',d:'Full season tasting',p:'$450'},{n:'Wild Garlic Flatbread',d:'Foraged & baked',p:'$35'},{n:'Nordic Wine Journey',d:'12 natural pours',p:'$200'}]},
+  {id:'r3',name:'Sukiyabashi Jiro',country:'Japan',flag:'🇯🇵',
+   img:'https://images.unsplash.com/photo-1553621042-f6e147245754?w=700&q=80',
+   rating:4.9,price:'$$$',reviews:2018,
+   desc:'Jiro Ono\'s 10-seat sushi counter in Tokyo\'s Ginza. The documentary made it a global pilgrimage.',
+   tags:['Michelin ★★★','Omakase Sushi','Legend'],
+   specialty:'Bluefin Tuna Nigiri',
+   mapQ:'Sukiyabashi+Jiro+Tokyo+Japan',
+   menu:[{n:'Omakase Lunch',d:'20-piece chef selection',p:'$300'},{n:'Hokkaido Uni',d:'Sea urchin',p:'$38'},{n:'Tamago',d:'Signature egg finale',p:'included'}]},
+  {id:'r4',name:'El Celler de Can Roca',country:'Spain',flag:'🇪🇸',
+   img:'https://images.unsplash.com/photo-1551218808-94e220e084d2?w=700&q=80',
+   rating:4.9,price:'$$$',reviews:3301,
+   desc:'The Roca brothers in Girona — 3 Michelin stars, 3 brothers, one kitchen. A sensory journey through Catalan culture.',
+   tags:['Michelin ★★★','Catalan','Creative'],
+   specialty:'Journey Through the Senses',
+   mapQ:'El+Celler+Can+Roca+Girona+Spain',
+   menu:[{n:'The Feast',d:'15 courses',p:'$280'},{n:'Suckling Pig',d:'Classic Catalan',p:'$70'},{n:'Olive Oil Ice Cream',d:'Iconic dessert',p:'$22'}]},
+  {id:'r5',name:'Bukhara',country:'India',flag:'🇮🇳',
+   img:'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=700&q=80',
+   rating:4.8,price:'$$',reviews:1654,
+   desc:'45 years of North-West Frontier cuisine at New Delhi\'s ITC Maurya. Dal Bukhara cooked for 24 straight hours.',
+   tags:['Heritage','Tandoor','Fine Dining'],
+   specialty:'Dal Bukhara (24-hour dal)',
+   mapQ:'Bukhara+Restaurant+New+Delhi',
+   menu:[{n:'Dal Bukhara',d:'24-hour slow-cooked',p:'$18'},{n:'Sikandari Raan',d:'Whole leg of lamb',p:'$65'},{n:'Mixed Grill Platter',d:'The full tandoor',p:'$42'}]},
+  {id:'r6',name:'Gaggan Anand',country:'Thailand',flag:'🇹🇭',
+   img:'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=700&q=80',
+   rating:4.9,price:'$$$',reviews:1788,
+   desc:'Bangkok\'s most adventurous kitchen — progressive Indian cuisine from the chef who left Noma to reinvent Indian food in Asia.',
+   tags:['Progressive Indian','Asia\'s 50 Best','Tasting Menu'],
+   specialty:'Lick it Up (edible menu)',
+   mapQ:'Gaggan+Anand+Bangkok+Thailand',
+   menu:[{n:'25-Course Journey',d:'Emoji tasting menu',p:'$400'},{n:'Yoghurt Explosion',d:'Signature spherification',p:'included'},{n:'Charcoal Lamb',d:'Tandoor × smoke',p:'included'}]}
+];
+
+/* ══ STATE ══ */
+const ST={favs:[],cart:[]};
+let _tt;
+
+/* ══ ALL DATA MAP ══ */
+const ALD={};
+[...MEALS,...SPICY,...ICE,...DRINKS].forEach(x=>ALD[x.id]=x);
+NATIONAL.forEach(x=>ALD[x.id]=x);
+RESTS.forEach(x=>ALD[x.id]=x);
+
+/* ══ HERO MOSAIC ══ */
+const HIMGS=['https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&q=60','https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&q=60','https://images.unsplash.com/photo-1563379091339-03246963d351?w=400&q=60','https://images.unsplash.com/photo-1553621042-f6e147245754?w=400&q=60','https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400&q=60','https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&q=60','https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&q=60','https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=400&q=60','https://images.unsplash.com/photo-1562967914-608f82629710?w=400&q=60','https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&q=60','https://images.unsplash.com/photo-1557142046-c704a3adf364?w=400&q=60','https://images.unsplash.com/photo-1561336313-0bd5e0b27ec8?w=400&q=60'];
+const hbg=document.getElementById('hbg');
+HIMGS.forEach(u=>{const d=document.createElement('div');d.innerHTML=`<img src="${u}" alt="" loading="lazy">`;hbg.appendChild(d)});
+
+/* ══ DIFFICULTY ══ */
+function dc(d){return d==='Easy'?'de':d==='Medium'?'dm':'dh'}
+
+/* ══ RENDER FOOD CARDS ══ */
+function renderFC(items,cid){
+  const g=document.getElementById(cid);
+  g.innerHTML=items.map(it=>`
+    <div class="fc fu" onclick="openFood('${it.id}')">
+      <div class="fc-img">
+        <img src="${it.img}" alt="${it.name}" loading="lazy">
+        <div class="fbadge ${it.bc}">${it.badge}</div>
+        <button class="ffav" onclick="event.stopPropagation();tFav('${it.id}',this)">${ST.favs.includes(it.id)?'❤️':'🤍'}</button>
+        <div class="fflag">${it.flag} ${it.country}</div>
+      </div>
+      <div class="fc-body">
+        <h3>${it.name}</h3>
+        <div class="fc-meta">
+          <div class="srow"><span class="s">★</span>${it.rating}</div>
+          <span class="d">·</span><span>${it.reviews.toLocaleString()} reviews</span>
+          <span class="d">·</span><span>⏱ ${it.time}</span>
+          <span class="d">·</span><span>🔥 ${it.cal} cal</span>
+        </div>
+        <p class="fc-desc">${it.desc}</p>
+        <div class="fc-foot">
+          <div class="diffi"><div class="dd ${dc(it.diff)}"></div>${it.diff}</div>
+          <button class="rbtn" onclick="event.stopPropagation();openFood('${it.id}')">View Recipe →</button>
+        </div>
+      </div>
+    </div>`).join('');
+  obsv(g);
+}
+
+/* ══ RENDER NATIONAL ══ */
+function renderNat(){
+  const g=document.getElementById('natGrid');
+  g.innerHTML=NATIONAL.map(n=>`
+    <div class="nc fu" onclick="openNat('${n.id}')">
+      <div class="nc-img">
+        <img src="${n.img}" alt="${n.dish}" loading="lazy">
+        <div class="nflag">${n.flag}</div>
+        <div class="nlabel">${n.country}</div>
+      </div>
+      <div class="nc-body">
+        <h4>${n.dish}</h4>
+        <p>${n.desc}</p>
+        <div class="nc-foot">
+          <div class="ntime">⏱ ${n.time} · ${n.diff}</div>
+          <button class="nrbtn" onclick="event.stopPropagation();openNat('${n.id}')">Recipe →</button>
+        </div>
+      </div>
+    </div>`).join('');
+  obsv(g);
+}
+
+/* ══ RENDER RESTAURANTS ══ */
+function renderRest(){
+  const g=document.getElementById('restGrid');
+  g.innerHTML=RESTS.map(r=>`
+    <div class="rc fu" onclick="openRest('${r.id}')">
+      <div class="rc-img">
+        <img src="${r.img}" alt="${r.name}" loading="lazy">
+        <div class="rstar">★ ${r.rating} · ${r.reviews.toLocaleString()} reviews</div>
+      </div>
+      <div class="rc-body">
+        <h3>${r.flag} ${r.name}</h3>
+        <p>${r.desc}</p>
+        <div class="rtags">${r.tags.map(t=>`<span class="rtag">${t}</span>`).join('')}</div>
+        <div class="rc-row">
+          <div class="rprice">from ${r.price} <small>/ person</small></div>
+          <button class="bookbtn" onclick="event.stopPropagation();showToast('Booking ${r.name}! 🎉','📋')">Reserve</button>
+        </div>
+      </div>
+    </div>`).join('');
+  obsv(g);
+}
+
+/* ══ OPEN FOOD MODAL ══ */
+function openFood(id){
+  const it=ALD[id];if(!it)return;
+  document.getElementById('mImg').src=it.img;
+  document.getElementById('mTitle').textContent=it.name;
+  document.getElementById('mMeta').innerHTML=`${it.flag} ${it.country} &nbsp;·&nbsp; ★ ${it.rating} &nbsp;·&nbsp; ⏱ ${it.time} &nbsp;·&nbsp; 🔥 ${it.cal} cal`;
+  document.getElementById('mTabs').innerHTML=`
+    <div class="mtab active" onclick="mTab('recipe',this)">📋 Recipe</div>
+    <div class="mtab" onclick="mTab('steps',this)">👨‍🍳 Tutorial</div>
+    <div class="mtab" onclick="mTab('nut',this)">📊 Nutrition</div>`;
+  rTab(it,'recipe');
+  document.getElementById('overlay').classList.add('on');
+}
+
+function mTab(tab,el){
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const title=document.getElementById('mTitle').textContent;
+  const it=Object.values(ALD).find(x=>(x.name||x.dish)===title);
+  if(it)rTab(it,tab);
+}
+
+function rTab(it,tab){
+  const c=document.getElementById('mContent');
+  if(tab==='recipe'){
+    c.innerHTML=`<div class="r2col">
+      <div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:14px">Ingredients</h4>
+        <div class="ingr-list">
+          ${it.ingr.map(i=>typeof i==='object'
+            ?`<div class="ingr-item"><span>${i.n}</span><span class="iamt">${i.a}</span></div>`
+            :`<div class="ingr-item"><span>${i}</span></div>`).join('')}
+        </div>
+      </div>
+      <div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:14px">Method Overview</h4>
+        <div class="steps-list">
+          ${it.steps.map((s,i)=>{
+            const t=typeof s==='object'?s.t:`Step ${i+1}`;
+            const x=typeof s==='object'?s.s:s;
+            return `<div class="step-item"><div class="snum">${i+1}</div><div class="stxt"><strong>${t}</strong>${x}</div></div>`;
+          }).join('')}
+        </div>
+      </div>
+    </div>`;
+  } else if(tab==='steps'){
+    c.innerHTML=`<div class="steps-list">
+      ${it.steps.map((s,i)=>{
+        const t=typeof s==='object'?s.t:`Step ${i+1}`;
+        const x=typeof s==='object'?s.s:s;
+        return `<div class="step-item"><div class="snum">${i+1}</div><div class="stxt" style="font-size:.9rem;line-height:1.76"><strong style="font-family:'Playfair Display',serif;font-size:.98rem;margin-bottom:5px">${t}</strong>${x}</div></div>`;
+      }).join('')}
+    </div>
+    <div style="margin-top:22px;padding:16px;background:var(--warm);border-radius:11px;border:1px solid var(--border)">
+      <strong style="font-size:.85rem;color:var(--gold)">💡 Pro Tip</strong>
+      <p style="font-size:.83rem;color:var(--ink2);margin-top:6px;line-height:1.65">Always prepare all ingredients before you start (mise en place). This single habit separates calm cooks from chaotic ones.</p>
+    </div>`;
+  } else {
+    const n=it.nut||{cal:it.cal,pro:'—',carb:'—',fat:'—'};
+    c.innerHTML=`<div class="nut-grid">
+      <div class="nut-card"><strong>${n.cal||it.cal}</strong><span>Calories</span></div>
+      <div class="nut-card"><strong>${n.pro||'—'}</strong><span>Protein</span></div>
+      <div class="nut-card"><strong>${n.carb||'—'}</strong><span>Carbs</span></div>
+      <div class="nut-card"><strong>${n.fat||'—'}</strong><span>Fat</span></div>
+    </div>
+    <div style="margin-top:18px;padding:14px;background:var(--warm);border-radius:11px;border:1px solid var(--border);font-size:.82rem;color:var(--ink2);line-height:1.7">
+      <strong style="color:var(--ink)">⚠️ Note:</strong> Values are per serving and approximate. Portion sizes and cooking methods affect actual values.
+    </div>`;
+  }
+}
+
+/* ══ NATIONAL MODAL ══ */
+function openNat(id){
+  const it=ALD[id];if(!it)return;
+  document.getElementById('mImg').src=it.img;
+  document.getElementById('mTitle').textContent=it.dish;
+  document.getElementById('mMeta').innerHTML=`${it.flag} ${it.country} &nbsp;·&nbsp; ⏱ ${it.time} &nbsp;·&nbsp; ${it.diff}`;
+  document.getElementById('mTabs').innerHTML=`
+    <div class="mtab active" onclick="nTab('recipe',this)">📋 Recipe</div>
+    <div class="mtab" onclick="nTab('steps',this)">👨‍🍳 Tutorial</div>`;
+  rNatTab(it,'recipe');
+  document.getElementById('overlay').classList.add('on');
+}
+function nTab(tab,el){
+  document.querySelectorAll('.mtab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const title=document.getElementById('mTitle').textContent;
+  const it=NATIONAL.find(x=>x.dish===title);
+  if(it)rNatTab(it,tab);
+}
+function rNatTab(it,tab){
+  const c=document.getElementById('mContent');
+  if(tab==='recipe'){
+    c.innerHTML=`<div class="r2col">
+      <div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:14px">Ingredients</h4>
+        <div class="ingr-list">${it.ingr.map(i=>`<div class="ingr-item"><span>${i}</span></div>`).join('')}</div>
+      </div>
+      <div>
+        <h4 style="font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:14px">Method</h4>
+        <div class="steps-list">${it.steps.map((s,i)=>`<div class="step-item"><div class="snum">${i+1}</div><div class="stxt">${s}</div></div>`).join('')}</div>
+      </div>
+    </div>`;
+  } else {
+    c.innerHTML=`<div class="steps-list">${it.steps.map((s,i)=>`<div class="step-item"><div class="snum">${i+1}</div><div class="stxt" style="font-size:.9rem;line-height:1.76">${s}</div></div>`).join('')}</div>`;
+  }
+}
+
+/* ══ RESTAURANT MODAL ══ */
+function openRest(id){
+  const r=ALD[id];if(!r)return;
+  document.getElementById('mImg').src=r.img;
+  document.getElementById('mTitle').textContent=r.name;
+  document.getElementById('mMeta').innerHTML=`${r.flag} ${r.country} &nbsp;·&nbsp; ★ ${r.rating} &nbsp;·&nbsp; ${r.price} &nbsp;·&nbsp; ${r.reviews.toLocaleString()} reviews`;
+  document.getElementById('mTabs').innerHTML=`<div class="mtab active">🍽 Menu & Info</div>`;
+  document.getElementById('mContent').innerHTML=`
+    <p style="font-size:.9rem;color:var(--ink2);line-height:1.7;margin-bottom:14px">${r.desc}</p>
+    <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px">${r.tags.map(t=>`<span class="rtag">${t}</span>`).join('')}</div>
+    <p style="font-size:.78rem;font-weight:700;color:var(--gold);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em">⭐ Signature: ${r.specialty}</p>
+    <h4 style="font-family:'Playfair Display',serif;font-size:1.08rem;margin-bottom:12px">Menu Highlights</h4>
+    <div class="menu-grid">${r.menu.map(m=>`<div class="mi"><div class="mi-l"><h5>${m.n}</h5><p>${m.d}</p></div><div class="miprice">${m.p}</div></div>`).join('')}</div>
+    <div class="mmap"><iframe src="https://maps.google.com/maps?q=${encodeURIComponent(r.mapQ)}&t=&z=14&ie=UTF8&iwloc=&output=embed" loading="lazy" title="Map"></iframe></div>
+    <button class="book-btn" onclick="showToast('Reservation sent for ${r.name}! 🎉','📋')">Reserve a Table at ${r.name}</button>`;
+  document.getElementById('overlay').classList.add('on');
+}
+
+/* ══ CLOSE ══ */
+function closeM(){document.getElementById('overlay').classList.remove('on')}
+function oClose(e){if(e.target===document.getElementById('overlay'))closeM()}
+
+/* ══ FAV ══ */
+function tFav(id,btn){
+  const i=ST.favs.indexOf(id);
+  if(i===-1){ST.favs.push(id);btn.textContent='❤️';showToast('Added to favourites','❤️')}
+  else{ST.favs.splice(i,1);btn.textContent='🤍';showToast('Removed from favourites')}
+}
+
+/* ══ CART ══ */
+function updCart(){
+  const el=document.getElementById('cartCt');
+  el.textContent=ST.cart.length;
+  el.classList.toggle('on',ST.cart.length>0);
+}
+document.getElementById('cartBtn').addEventListener('click',()=>showToast(`🛒 ${ST.cart.length} item${ST.cart.length!==1?'s':''} in cart`,'🛒'));
+
+/* ══ TOAST ══ */
+function showToast(msg,icon='✅'){
+  clearTimeout(_tt);
+  document.getElementById('tMsg').textContent=msg;
+  document.getElementById('tIcon').textContent=icon;
+  document.getElementById('toast').classList.add('on');
+  _tt=setTimeout(()=>document.getElementById('toast').classList.remove('on'),3000);
+}
+
+/* ══ SCROLL NAV ══ */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>50);
+  const ids=['meals','spicy','icecream','drinks','national','restaurants'];
+  let cur='meals';
+  ids.forEach(id=>{const el=document.getElementById(id);if(el&&el.getBoundingClientRect().top<110)cur=id});
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+});
+
+/* ══ HERO CATS ══ */
+function goSec(id,el){
+  document.querySelectorAll('.hcat').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ══ GLOBAL SEARCH ══ */
+function gSearch(val){
+  const v=val.trim().toLowerCase();if(!v)return;
+  const all=[...MEALS,...SPICY,...ICE,...DRINKS];
+  const found=all.find(x=>x.name.toLowerCase().includes(v)||x.country.toLowerCase().includes(v)||(x.desc&&x.desc.toLowerCase().includes(v)));
+  if(found){openFood(found.id);return}
+  const nat=NATIONAL.find(x=>x.dish.toLowerCase().includes(v)||x.country.toLowerCase().includes(v));
+  if(nat){openNat(nat.id);return}
+  showToast('No exact match — try another keyword','ℹ️');
+}
+
+/* ══ INTERSECTION OBSERVER ══ */
+function obsv(container){
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target)}});
+  },{threshold:0.07});
+  container.querySelectorAll('.fu').forEach(el=>io.observe(el));
+}
+
+/* ══ INIT ══ */
+renderFC(MEALS,'mealsGrid');
+renderFC(SPICY,'spicyGrid');
+renderFC(ICE,'iceGrid');
+renderFC(DRINKS,'drinksGrid');
+renderNat();
+renderRest();
+</script>
+</body>
+</html>
